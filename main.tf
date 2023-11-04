@@ -16,5 +16,5 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   s3_key     = aws_s3_object.lambda_layer_object.key
 
   # Specify the runtimes your layer is compatible with
-  compatible_runtimes = compatible_runtimes
+  compatible_runtimes = var.compatible_runtimes
 }
