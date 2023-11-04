@@ -10,7 +10,7 @@ resource "aws_s3_object" "lambda_layer_object" {
 }
 
 resource "aws_lambda_layer_version" "lambda_layer" {
-  filename   = var.lambda_layer_zip_path
+  # filename   = var.lambda_layer_zip_path
   layer_name = var.lambda_layer_name
   s3_bucket  = aws_s3_bucket.lambda_layer_bucket.id
   s3_key     = aws_s3_object.lambda_layer_object.key
