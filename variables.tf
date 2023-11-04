@@ -13,7 +13,7 @@ variable "lambda_layer_name" {
   type        = string
 }
 
-variable "compatible_runtimes" {
+variable "layer_compatible_runtimes" {
   description = "Compatible runtimes for the Lambda layer"
   type        = list(string)
   default     = ["python3.10"]
