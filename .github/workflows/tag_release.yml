@@ -15,13 +15,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # fetch all history and tags
+          fetch-depth: 0  # fetch all history for all tags and branches
 
       - name: Determine Version Bump and Tag
         id: version
         run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo "Latest tag: $LATEST_TAG"
+          # Check if any tags exist and get the latest
+          if git fetch --tags && git describe --tags --abbrev=0; then
+            LATEST_TAG=$(git describe --tags --abbrev=0)
+            echo "Latest tag: $LATEST_TAG"
+          else
+            # If no tags exist, start from an initial version
+            LATEST_TAG="0.0.0"
+            echo "Starting from initial tag: $LATEST_TAG"
+          fi
 
           # Default to patch. If #minor or #major is in the commit message, adjust accordingly
           if [[ "${{ github.event.head_commit.message }}" == *"#major"* ]]; then
@@ -36,10 +43,10 @@ jobs:
           # Break down the tag into major.minor.patch
           IFS='.' read -ra PARTS <<< "$LATEST_TAG"
           MAJOR=${PARTS[0]}
-          MINOR=${PARTS[1]}
-          PATCH=${PARTS[2]}
+          MINOR=${PARTS[1]:-0}  # Default to 0 if not present
+          PATCH=${PARTS[2]:-0}  # Default to 0 if not present
 
-          # Increment version
+          # Increment version based on the type of bump
           case $BUMP in
             major)
               MAJOR=$((MAJOR + 1))
@@ -55,7 +62,7 @@ jobs:
               ;;
           esac
 
-          NEW_TAG="$MAJOR.$MINOR.$PATCH"
+          NEW_TAG="v$MAJOR.$MINOR.$PATCH"
           echo "New tag: $NEW_TAG"
           echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
         shell: bash
