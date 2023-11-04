@@ -47,5 +47,4 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_lambda_layer_arn"></a> [lambda\_layer\_arn](#output\_lambda\_layer\_arn) | n/a |
-| <a name="output_s3_bucket_name"></a> [s3\_bucket\_name](#output\_s3\_bucket\_name) | n/a |
 <!-- END_TF_DOCS -->
