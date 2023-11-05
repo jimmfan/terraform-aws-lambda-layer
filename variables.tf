@@ -1,4 +1,4 @@
-variable "s3_bucket_name" {
+variable "s3_bucket_name_prefix" {
   description = "The name of the S3 bucket to store the Lambda layer ZIP file"
   type        = string
 }
@@ -18,4 +18,3 @@ variable "layer_compatible_runtimes" {
   type        = list(string)
   default     = ["python3.10"]
 }
-

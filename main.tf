@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "lambda_layer_bucket" {
-  bucket = var.s3_bucket_name
+  bucket_prefix = var.s3_bucket_name_prefix
 }
 
 resource "aws_s3_object" "lambda_layer_object" {

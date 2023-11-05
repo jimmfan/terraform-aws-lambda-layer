@@ -40,7 +40,7 @@ No modules.
 | <a name="input_lambda_layer_name"></a> [lambda\_layer\_name](#input\_lambda\_layer\_name) | The name of the Lambda layer | `string` | n/a | yes |
 | <a name="input_lambda_layer_zip_path"></a> [lambda\_layer\_zip\_path](#input\_lambda\_layer\_zip\_path) | The local path to the Lambda layer ZIP file | `string` | n/a | yes |
 | <a name="input_layer_compatible_runtimes"></a> [layer\_compatible\_runtimes](#input\_layer\_compatible\_runtimes) | Compatible runtimes for the Lambda layer | `list(string)` | <pre>[<br>  "python3.10"<br>]</pre> | no |
-| <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The name of the S3 bucket to store the Lambda layer ZIP file | `string` | n/a | yes |
+| <a name="input_s3_bucket_name_prefix"></a> [s3\_bucket\_name\_prefix](#input\_s3\_bucket\_name\_prefix) | The name of the S3 bucket to store the Lambda layer ZIP file | `string` | n/a | yes |
 
 ## Outputs
 
