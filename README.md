@@ -1,4 +1,4 @@
-# Example Usage
+# Example Usages
     module "lambda_layer" {
         source  = "./aws-lambda-layer-module"
 
@@ -12,18 +12,18 @@
     name: Continuous Deployment
 
     on:
-    push:
-        branches:
-        - main
+      push:
+          branches:
+          - main
     workflow_dispatch:
 
     env:
-    repo_name: ${{ github.event.repository.name }}
-    python_version: "3.10"
-    tf_vars_path: .auto.tfvars
+      repo_name: ${{ github.event.repository.name }}
+      python_version: "3.10"
+      tf_vars_path: .auto.tfvars
 
     jobs:
-    create-lambda-layer-zip:
+      create-lambda-layer-zip:
         name: Create lambda layer zip
         runs-on: ubuntu-20.04
         permissions:
