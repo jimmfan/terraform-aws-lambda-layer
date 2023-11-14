@@ -48,3 +48,75 @@ No modules.
 |------|-------------|
 | <a name="output_lambda_layer_arn"></a> [lambda\_layer\_arn](#output\_lambda\_layer\_arn) | n/a |
 <!-- END_TF_DOCS -->
+
+
+# Example of CD Workflow
+    name: Continuous Deployment
+
+    on:
+    push:
+        branches:
+        - main
+    workflow_dispatch:
+
+    env:
+    repo_name: ${{ github.event.repository.name }}
+    python_version: "3.10"
+    tf_vars_path: .auto.tfvars
+
+    jobs:
+    create-lambda-layer-zip:
+        name: Create lambda layer zip
+        runs-on: ubuntu-20.04
+        permissions:
+        contents: write
+
+        steps:
+        - name: Checkout repository
+            uses: actions/checkout@v3
+
+        - name: Set up Python ${{ env.python_version }}
+            uses: actions/setup-python@v2
+            with:
+            python-version: ${{ env.python_version }}
+
+        - name: Install aws-xray-sdk
+            run: |
+            pip3 install aws-xray-sdk -t ./python
+
+        - name: Zip aws-xray-sdk
+            run: |
+            zip -r xray.zip ./python
+
+        - name: Upload xray.zip artifact
+            uses: actions/upload-artifact@v3
+            with:
+            name: xray
+            path: ./xray.zip
+
+
+    deploy_lambda_layer:
+        name: Deploy lambda layer
+        needs: create-lambda-layer-zip
+        runs-on: ubuntu-20.04
+        steps:
+        - name: Checkout code
+            uses: actions/checkout@v3
+
+        - name: Download xray zip from GitHub Artifacts
+            uses: actions/download-artifact@v3
+            with:
+            name: xray
+            path: ./ # Downloads to the root directory of the workspace
+
+        - name: Setup Terraform
+            uses: hashicorp/setup-terraform@v2
+            with:
+            cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+            terraform_version: '1.6.3' # Specify the version of Terraform here
+
+        - name: Deploy with Terraform
+            run: |
+            terraform init
+            terraform apply -auto-approve
+            working-directory: ./terraform_dir
