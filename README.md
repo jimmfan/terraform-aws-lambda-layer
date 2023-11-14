@@ -1,11 +1,11 @@
 # Example Usages
     module "lambda_layer" {
-        source  = "./aws-lambda-layer-module"
+      source  = "./aws-lambda-layer-module"
 
-        # Pass in required variables
-        s3_bucket_name       = "my-lambda-layer-bucket"
-        lambda_layer_zip_path = "path/to/lambda-layer.zip"
-        lambda_layer_name    = "my_lambda_layer"
+      # Pass in required variables
+      s3_bucket_name       = "my-lambda-layer-bucket"
+      lambda_layer_zip_path = "path/to/lambda-layer.zip"
+      lambda_layer_name    = "my_lambda_layer"
     }
 
 # Example of CD Workflow
@@ -84,7 +84,6 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
